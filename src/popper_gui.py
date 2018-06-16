@@ -12,9 +12,11 @@ class PopperGui:
         self.label = Label(master, bg=args.bgcolor, fg='white', text="From: {0}".format(args.sender))
         self.label.pack()
 
-        self.message = Label(master, bg=args.bgcolor, fg='white', text="Message: {0}".format(args.message))
+        self.message = Label(master, bg=args.bgcolor, fg='white', text="Message")
         self.message.pack()
 
+        self.body = Label(master, bg=args.bgcolor, wraplength=500, fg='white', text=args.message)
+        self.body.pack()
 
 def main(args):
     root = Tk()
