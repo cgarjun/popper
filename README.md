@@ -19,8 +19,8 @@ export POPPER_HOST_CONFIG_LIST=/Users/arjun/Documents/code/popper/host_config.js
 export POPPER_CONFIG=/Users/arjun/Documents/code/popper/popper_config.json
 ```
 
-run popper_client as a service on machines that should receive messages.
-make popper and popper_gui available in $PATH as commands  
+run **popper_client** as a service on machines that should receive messages.
+make **popper** and **popper_gui** available in $PATH as commands  
 ## Usage
 ```
 popper --user suneeth --message "hey can you come by"
