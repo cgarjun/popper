@@ -1,0 +1,47 @@
+import socket
+import argparse
+import getpass
+import pickle
+import json
+import os
+
+
+def find_user_host(username):
+    host_config = os.getenv('POPPER_HOST_CONFIG_LIST', None)
+    if host_config is not None:
+        with open(host_config, 'r') as cfile:
+            host_list = json.load(cfile)
+            user_host = host_list.get(username, None)
+            if user_host is not None:
+                return user_host
+            else:
+                raise IOError('User hostname not found')
+    else:
+        raise IOError('POPPER_HOST_CONFIG_LIST not found')
+
+def main(args):
+    clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    message_data = {}
+    username = getpass.getuser()
+    host_name = find_user_host(username)
+
+    if host_name is None:
+        raise UserWarning('Cannot find the user host')
+    
+    message_data['username'] = username
+    message_data['body'] = args.message
+    message_data['bgcolor'] = args.bgcolor
+
+    data = pickle.dumps(message_data)
+
+    clientsocket.connect((host_name, 8089))
+    clientsocket.send(data)
+
+if __name__ == '__main__':
+    arguments = argparse.ArgumentParser("Gui to display the message for chatter")
+    arguments.add_argument('--user', type=str, help='Name / user id of the sender')
+    arguments.add_argument('--message', type=str, help='Message from the sender')
+    arguments.add_argument('--bgcolor', type=str, default='grey', help='Message from the sender')
+    args = arguments.parse_args()
+    main(args)

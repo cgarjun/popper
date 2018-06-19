@@ -2,6 +2,11 @@
 
 ## Requirements
 * Python 3
+
+## Setup
+```
+export POPPER_HOST_CONFIG_LIST=/Users/arjun/Documents/code/popper/host_config.json
+```
  
 ## Usage
 ```
