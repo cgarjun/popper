@@ -1,7 +1,7 @@
 # popper
 
 ## Requirements
-* Python 3
+* Python 2.7
 
 ## Description
 Inspired by messaging system from Dreamwork Animation, A simple attemp in python
