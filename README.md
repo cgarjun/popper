@@ -6,6 +6,7 @@
 ## Setup
 ```
 export POPPER_HOST_CONFIG_LIST=/Users/arjun/Documents/code/popper/host_config.json
+export POPPER_CONFIG=/Users/arjun/Documents/code/popper/popper_config.json
 ```
  
 ## Usage

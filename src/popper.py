@@ -8,6 +8,19 @@ import json
 import os
 
 
+def find_port_number():
+    popper_config = os.getenv('POPPER_CONFIG', None)
+    if popper_config is not None:
+        with open(popper_config, 'r') as cfile:
+            config_dict = json.load(cfile)
+            port_number = config_dict.get('port', None)
+            if port_number is not None:
+                return port_number
+            else:
+                raise IOError('port number missingin the config')
+    else:
+        raise IOError('POPPER_CONFIG not found')
+
 def find_user_host(username):
     host_config = os.getenv('POPPER_HOST_CONFIG_LIST', None)
     if host_config is not None:
@@ -37,13 +50,15 @@ def main(args):
 
     data = pickle.dumps(message_data)
 
-    clientsocket.connect((host_name, 8089))
+    port_number = find_port_number()
+
+    clientsocket.connect((host_name, port_number))
     clientsocket.send(data)
 
 if __name__ == '__main__':
-    arguments = argparse.ArgumentParser("Gui to display the message for chatter")
-    arguments.add_argument('--user', type=str, help='Name / user id of the sender')
-    arguments.add_argument('--message', type=str, help='Message from the sender')
-    arguments.add_argument('--bgcolor', type=str, default='grey', help='Message from the sender')
+    arguments = argparse.ArgumentParser("CLI to send message")
+    arguments.add_argument('--user', type=str, help='user id to send message to')
+    arguments.add_argument('--message', type=str, help='message you want to send')
+    arguments.add_argument('--bgcolor', type=str, default='grey', help='bgcolor of the gui')
     args = arguments.parse_args()
     main(args)
