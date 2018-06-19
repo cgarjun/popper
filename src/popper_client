@@ -6,19 +6,30 @@ import pickle
 import argparse
 import json
 
-
-def find_port_number():
+def get_popper_config():
     popper_config = os.getenv('POPPER_CONFIG', None)
     if popper_config is not None:
         with open(popper_config, 'r') as cfile:
             config_dict = json.load(cfile)
-            port_number = config_dict.get('port', None)
-            if port_number is not None:
-                return port_number
-            else:
-                raise IOError('port number missingin the config')
+            return config_dict
     else:
         raise IOError('POPPER_CONFIG not found')
+
+def find_port_number():
+    config_dict = get_popper_config()
+    port_number = config_dict.get('port', None)
+    if port_number is not None:
+        return port_number
+    else:
+        raise IOError('port number missingin the config')
+
+def find_data_size():
+    config_dict = get_popper_config()
+    data_size = config_dict.get('data_size', None)
+    if data_size is not None:
+        return data_size
+    else:
+        raise IOError('port number missingin the config')
 
 def main(args):
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -27,16 +38,13 @@ def main(args):
     if args.port:
         port_number = args.port
 
-    print(port_number)
-    print(type(port_number))
     serversocket.bind(('localhost', port_number))
     serversocket.listen(5) # become a server socket, maximum 5 connections
 
     while True:
         connection, address = serversocket.accept()
-        buf = connection.recv(4096)
-        print(buf)
-        print(type(buf))
+        data_size = find_data_size()
+        buf = connection.recv(data_size)
         message_data = pickle.loads(buf)
         if len(buf) > 0:
             username = message_data['username']
