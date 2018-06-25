@@ -38,7 +38,9 @@ def main(args):
     if args.port:
         port_number = args.port
 
-    serversocket.bind(('localhost', port_number))
+    hostname = socket.gethostname()
+
+    serversocket.bind((hostname, port_number))
     serversocket.listen(5) # become a server socket, maximum 5 connections
 
     while True:
