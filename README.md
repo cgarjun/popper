@@ -1,4 +1,4 @@
-# popper
+# popper [![Build Status](https://travis-ci.org/cgarjun/popper.svg?branch=master)](https://travis-ci.org/cgarjun/popper)
 
 ## Requirements
 * Python 2.7
