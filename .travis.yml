@@ -8,4 +8,5 @@ script:
   - export POPPER_HOST_CONFIG_LIST=$TRAVIS_BUILD_DIR/host_config.json
   - export POPPER_CONFIG=$TRAVIS_BUILD_DIR/popper_config.json
   - export PYTHONPATH=$TRAVIS_BUILD_DIR/src
-  - python pytest.py # or py.test for Python versions 3.5 and below
+  - python client_test.py
+  - python popper_test.py
